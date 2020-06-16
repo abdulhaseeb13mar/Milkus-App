@@ -15,7 +15,9 @@ import {
   Text,
   StatusBar,
 } from 'react-native';
-
+import {applyMiddleware, createStore} from 'redux';
+import ReduxThunk from 'redux-thunk';
+import rootReducer from './src/reducer/reducer';
 import {
   Header,
   LearnMoreLinks,
@@ -23,6 +25,8 @@ import {
   DebugInstructions,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+
+const store = createStore(rootReducer, {}, applyMiddleware(ReduxThunk));
 
 const App: () => React$Node = () => {
   return (
