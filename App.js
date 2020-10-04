@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 /**
  * Sample React Native App
  * https://github.com/facebook/react-native
@@ -7,30 +8,90 @@
  */
 import 'react-native-gesture-handler';
 import React from 'react';
-import {StatusBar} from 'react-native';
+import {StatusBar, StyleSheet, Text, Dimensions} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import BottomNavigatorHome from './src/screens/bottomNavigatorHome/bottomNavigatorHome';
+import AddCustomer from './src/screens/addCustomer/addCustomer';
+import AntDesignIcon from 'react-native-vector-icons/AntDesign';
 // import {applyMiddleware, createStore} from 'redux';
 // import ReduxThunk from 'redux-thunk';
 // import rootReducer from './src/reducer/reducer';
 // const store = createStore(rootReducer, {}, applyMiddleware(ReduxThunk));
+const HEIGHT = Dimensions.get('window').height;
 const Tab = createBottomTabNavigator();
 const App: () => React$Node = () => {
   return (
     <>
-      <StatusBar barStyle="dark-content" />
+      <StatusBar backgroundColor="#4f6d7a" barStyle="light-content" />
       <NavigationContainer>
-        <Tab.Navigator initialRouteName="DrawerHome" headerMode="none">
+        <Tab.Navigator
+          initialRouteName="Home"
+          headerMode="none"
+          backBehavior="history"
+          tabBarOptions={{
+            style: styles.tabstyle,
+            activeBackgroundColor: '#cfd8dc',
+          }}>
           <Tab.Screen
-            name="BottomNavigatorHome"
+            name="Home"
             component={BottomNavigatorHome}
+            options={{
+              title: 'home',
+              tabBarIcon: ({focused, color, size}) =>
+                tabBarIconHandler(AntDesignIcon, 'home', focused, color, size),
+              tabBarLabel: ({focused, color}) =>
+                tabLabelHandler('Home', focused, color),
+            }}
+          />
+          <Tab.Screen
+            name="AddCustomer"
+            component={AddCustomer}
+            options={{
+              title: 'add',
+              tabBarIcon: ({focused, color, size}) =>
+                tabBarIconHandler(
+                  AntDesignIcon,
+                  'adduser',
+                  focused,
+                  color,
+                  size,
+                ),
+              tabBarLabel: ({focused, color}) =>
+                tabLabelHandler('Add', focused, color),
+            }}
           />
         </Tab.Navigator>
       </NavigationContainer>
     </>
   );
 };
+
+const tabBarIconHandler = (Comp, name, focused, color, size) => (
+  <Comp
+    name={name}
+    color={focused ? 'black' : color}
+    size={focused ? size + 5 : size}
+  />
+);
+const tabLabelHandler = (name, focused, color) => (
+  <Text
+    style={{
+      color: focused ? 'black' : color,
+      fontSize: focused ? 14 : 12,
+      fontWeight: focused ? 'bold' : null,
+    }}>
+    {name}
+  </Text>
+);
+
+const styles = StyleSheet.create({
+  tabstyle: {
+    backgroundColor: '#fafafa',
+    height: HEIGHT * 0.08,
+  },
+});
+
 export default App;
 
 // eslint-disable-next-line no-lone-blocks
