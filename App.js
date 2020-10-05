@@ -7,8 +7,9 @@
  * @flow strict-local
  */
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StatusBar, StyleSheet, Text, Dimensions} from 'react-native';
+import SplashScreen from 'react-native-splash-screen';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import BottomNavigatorHome from './src/screens/bottomNavigatorHome/bottomNavigatorHome';
@@ -21,6 +22,9 @@ import AntDesignIcon from 'react-native-vector-icons/AntDesign';
 const HEIGHT = Dimensions.get('window').height;
 const Tab = createBottomTabNavigator();
 const App: () => React$Node = () => {
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
   return (
     <>
       <StatusBar backgroundColor="#4f6d7a" barStyle="light-content" />
