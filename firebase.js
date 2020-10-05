@@ -7,7 +7,7 @@ import firebaseConfig from './firebaseConfig.json';
 
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
-  console.log('firebase initalzed');
+  // console.log('firebase initalzed');
 }
 
 export default firebase;
